@@ -38,7 +38,8 @@ sql_exporter \
 nats_exporter \
 cadvisor \
 dellhw_exporter \
-systemd_exporter
+systemd_exporter \
+bird_exporter
 
 .PHONY: $(MANUAL) $(AUTO_GENERATED)
 
