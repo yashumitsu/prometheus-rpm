@@ -1,13 +1,8 @@
-MANUAL = prometheus2 \
-jmx_exporter \
-rabbitmq_exporter \
-ping_exporter \
-mtail \
+MANUAL = jmx_exporter
 
 AUTO_GENERATED = alertmanager \
 node_exporter \
 blackbox_exporter \
-snmp_exporter \
 pushgateway \
 mysqld_exporter \
 elasticsearch_exporter \
@@ -16,29 +11,17 @@ pgbouncer_exporter \
 redis_exporter \
 haproxy_exporter \
 kafka_exporter \
-nginx_exporter \
-bind_exporter \
-json_exporter \
 mongodb_exporter \
 statsd_exporter \
 memcached_exporter \
 consul_exporter \
 smokeping_prober \
-iperf3_exporter \
 apache_exporter \
-exporter_exporter \
 process_exporter \
 ssl_exporter \
-ebpf_exporter \
-karma \
 artifactory_exporter \
-phpfpm_exporter \
-ipmi_exporter \
 sql_exporter \
-nats_exporter \
 cadvisor \
-dellhw_exporter \
-systemd_exporter \
 bird_exporter
 
 .PHONY: $(MANUAL) $(AUTO_GENERATED)

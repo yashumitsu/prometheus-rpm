@@ -140,29 +140,6 @@ packages:
       dynamic:
         <<: *default_dynamic_context
         tarball: '{{URL}}/releases/download/%{version}/{{package}}.tar.gz'
-  snmp_exporter:
-    build_steps:
-      <<: *default_build_steps
-    context:
-      <<: *default_context
-      static:
-        <<: *default_static_context
-        version: 0.26.0
-        license: ASL 2.0
-        URL: https://github.com/prometheus/snmp_exporter
-        service_opts:
-          - --config.file=/etc/prometheus/snmp.yml
-        additional_sources:
-          - path: snmp.yml
-            dest: '%{_sysconfdir}/prometheus/snmp.yml'
-            from_tarball: true
-            mode: 640
-            group: '%{group}'
-        open_file_limit: 16384
-        summary: Prometheus SNMP exporter.
-        description: |
-          This is an exporter that exposes information gathered from SNMP for use by the
-          Prometheus monitoring system.
   mysqld_exporter:
     build_steps:
       <<: *default_build_steps
@@ -170,7 +147,7 @@ packages:
       <<: *default_context
       static:
         <<: *default_static_context
-        version: 0.15.1
+        version: 0.16.0
         license: ASL 2.0
         URL: https://github.com/prometheus/mysqld_exporter
         summary: Prometheus exporter for MySQL server metrics.
@@ -184,7 +161,7 @@ packages:
       <<: *default_context
       static:
         <<: *default_static_context
-        version: 0.15.0
+        version: 0.16.0
         license: ASL 2.0
         URL: https://github.com/prometheus-community/postgres_exporter
         user: postgres
@@ -207,7 +184,7 @@ packages:
       <<: *default_context
       static:
         <<: *default_static_context
-        version: 0.8.0
+        version: 0.10.2
         license: MIT
         URL: https://github.com/prometheus-community/pgbouncer_exporter
         user: postgres
@@ -221,7 +198,7 @@ packages:
       <<: *default_context
       static:
         <<: *default_static_context
-        version: 1.7.0
+        version: 1.8.0
         license: ASL 2.0
         URL: https://github.com/prometheus-community/elasticsearch_exporter
         service_opts:
@@ -235,7 +212,7 @@ packages:
     context:
       static:
         <<: *default_static_context
-        version: 1.61.0
+        version: 1.67.0
         license: MIT
         summary: Prometheus exporter for Redis server metrics.
         description: Prometheus Exporter for Redis Metrics. Supports Redis 2.x, 3.x, 4.x, 5.x and 6.x
@@ -264,59 +241,11 @@ packages:
       <<: *default_context
       static:
         <<: *default_static_context
-        version: 1.7.0
+        version: 1.8.0
         license: ASL 2.0
         URL: https://github.com/danielqsj/kafka_exporter
         summary: Kafka exporter for Prometheus.
         description: Kafka exporter for Prometheus.
-  nginx_exporter:
-    build_steps:
-      <<: *default_build_steps
-    context:
-      <<: *default_context
-      static:
-        <<: *default_static_context
-        version: 1.2.0
-        license: ASL 2.0
-        package: nginx-prometheus-exporter_%{version}_linux_amd64
-        URL: https://github.com/nginxinc/nginx-prometheus-exporter
-        tarball_has_subdirectory: false
-        fix_name: nginx-prometheus-exporter
-        service_opts:
-          - --nginx.plus
-          - --nginx.scrape-uri=http://127.0.0.1:8080/api
-        summary: NGINX Prometheus Exporter for NGINX and NGINX Plus.
-        description: NGINX Prometheus Exporter for NGINX and NGINX Plus.
-  bind_exporter:
-    build_steps:
-      <<: *default_build_steps
-    context:
-      <<: *default_context
-      static:
-        <<: *default_static_context
-        version: 0.7.0
-        license: ASL 2.0
-        URL: https://github.com/prometheus-community/bind_exporter
-        summary: Prometheus exporter for Bind nameserver
-        description: Export BIND(named/dns) v9+ service metrics to Prometheus.
-  json_exporter:
-    build_steps:
-      <<: *default_build_steps
-    context:
-      <<: *default_context
-      static:
-        <<: *default_static_context
-        version: 0.6.0
-        license: ASL 2.0
-        URL: https://github.com/prometheus-community/json_exporter
-        summary: A Prometheus exporter which scrapes remote JSON by JSONPath.
-        description: A Prometheus exporter which scrapes remote JSON by JSONPath.
-        service_opts:
-          - --config.file=/etc/prometheus/json_exporter.yml
-        additional_sources:
-          - path: https://raw.githubusercontent.com/prometheus-community/%{name}/v%{version}/examples/config.yml
-            dest: '%{_sysconfdir}/prometheus/%{name}.yaml'
-            from_tarball: false
   pushgateway:
     build_steps:
       <<: *default_build_steps
@@ -324,7 +253,7 @@ packages:
       <<: *default_context
       static:
         <<: *default_static_context
-        version: 1.9.0
+        version: 1.11.0
         license: ASL 2.0
         URL: https://github.com/prometheus/pushgateway
         summary: Prometheus push acceptor for ephemeral and batch jobs.
@@ -340,7 +269,7 @@ packages:
       <<: *default_context
       static:
         <<: *default_static_context
-        version: 0.40.0
+        version: 0.43.1
         license: ASL 2.0
         URL: https://github.com/percona/mongodb_exporter
         package: '%{name}-%{version}.linux-amd64'
@@ -353,7 +282,7 @@ packages:
       <<: *default_context
       static:
         <<: *default_static_context
-        version: 0.26.1
+        version: 0.28.0
         license: ASL 2.0
         URL: https://github.com/prometheus/statsd_exporter
         summary: Export StatsD metrics in Prometheus format.
@@ -366,7 +295,7 @@ packages:
       <<: *default_context
       static:
         <<: *default_static_context
-        version: 0.14.4
+        version: 0.15.0
         license: ASL 2.0
         URL: https://github.com/prometheus/memcached_exporter
         summary: Memcached stats exporter for Prometheus.
@@ -379,7 +308,7 @@ packages:
       <<: *default_context
       static:
         <<: *default_static_context
-        version: 0.12.0
+        version: 0.13.0
         license: ASL 2.0
         URL: https://github.com/prometheus/consul_exporter
         summary: Consul stats exporter for Prometheus.
@@ -401,20 +330,6 @@ packages:
         summary: Smokeping-style prober for Prometheus.
         description: |
           The smokeping-style prober sends a series of ICMP (or UDP) pings to a target and records the responses in Prometheus histogram metrics.
-  iperf3_exporter:
-    build_steps:
-      <<: *default_build_steps
-    context:
-      <<: *default_context
-      static:
-        <<: *default_static_context
-        version: 0.1.3
-        license: ASL 2.0
-        release: 2
-        URL: https://github.com/edgard/iperf3_exporter
-        summary: Prometheus exporter for iPerf3 probing.
-        description: |
-          The iPerf3 exporter allows iPerf3 probing of endpoints.
   apache_exporter:
     build_steps:
       <<: *default_build_steps
@@ -422,33 +337,12 @@ packages:
       <<: *default_context
       static:
         <<: *default_static_context
-        version: 1.0.8
+        version: 1.0.9
         license: MIT
         URL: https://github.com/Lusitaniae/apache_exporter
         summary: Prometheus exporter Apache webserver mertics.
         description: |
           Prometheus exporter for Apache mod_status statistics.
-  exporter_exporter:
-    build_steps:
-      <<: *default_build_steps
-    context:
-      <<: *default_context
-      static:
-        <<: *default_static_context
-        version: 0.4.5
-        license: ASL 2.0
-        URL: https://github.com/QubitProducts/exporter_exporter
-        additional_sources:
-          - path: https://raw.githubusercontent.com/QubitProducts/%{name}/v%{version}/expexp.yaml
-            dest: '%{_sysconfdir}/prometheus/%{name}.yml'
-        service_opts:
-          - --config.file=/etc/prometheus/exporter_exporter.yml
-        summary: Simple reverse proxy for Prometheus exporters
-        description: |
-          A simple reverse proxy for prometheus exporters. It is intended as a single
-          binary alternative to nginx/apache for use in environments where opening
-          multiple TCP ports to all servers might be difficult (technically or
-          politically).
   process_exporter:
     build_steps:
       <<: *default_build_steps
@@ -456,7 +350,7 @@ packages:
       <<: *default_context
       static:
         <<: *default_static_context
-        version: 0.8.2
+        version: 0.8.5
         license: MIT
         URL: https://github.com/ncabatoff/process-exporter
         package: process-exporter-%{version}.linux-amd64
@@ -492,47 +386,6 @@ packages:
           probes, local files or Kubernetes secrets. The metrics are labelled with fields
           from the certificate, which allows for informational dashboards and flexible
           alert routing.
-  ebpf_exporter:
-    build_steps:
-      <<: *default_build_steps
-    context:
-      <<: *default_context
-      static:
-        <<: *default_static_context
-        version: 1.2.5
-        license: MIT
-        URL: https://github.com/cloudflare/ebpf_exporter
-        package: '%{name}.x86_64'
-        service_opts:
-          - --config.file=/etc/prometheus/ebpf_exporter.yml
-        additional_sources:
-          - path: https://raw.githubusercontent.com/cloudflare/%{name}/v%{version}/examples/bio.yaml
-            dest: '%{_sysconfdir}/prometheus/%{name}.yml'
-            from_tarball: false
-        summary: Prometheus exporter for custom eBPF metrics
-        description: |
-          eBPF exporter allows you to write eBPF code and export metrics that are not otherwise accessible from the Linux kernel.
-      dynamic:
-        <<: *default_dynamic_context
-        tarball: '{{URL}}/releases/download/v%{version}/{{package}}'
-  karma:
-    build_steps:
-      <<: *default_build_steps
-    context:
-      <<: *default_context
-      static:
-        <<: *default_static_context
-        version: '0.120'
-        license: ASL 2.0
-        URL: https://github.com/prymitive/karma
-        package: '%{name}-linux-amd64'
-        tarball_has_subdirectory: false
-        fix_name: karma-linux-amd64
-        service_opts:
-          - --alertmanager.uri=http://localhost:9093/
-        summary: Alert dashboard for Prometheus Alertmanager
-        description: |
-          Alert dashboard for Prometheus Alertmanager.
   artifactory_exporter:
     build_steps:
       <<: *default_build_steps
@@ -550,61 +403,6 @@ packages:
           ARTI_PASSWORD: password
         summary: Prometheus exporter for JFrog Artifactory stats.
         description: Collects metrics about an Artifactory system
-  phpfpm_exporter:
-    build_steps:
-      <<: *default_build_steps
-    context:
-      <<: *default_context
-      static:
-        <<: *default_static_context
-        version: 2.2.0
-        license: ASL 2.0
-        URL: https://github.com/hipages/php-fpm_exporter
-        package: php-fpm_exporter_%{version}_linux_amd64
-        tarball_has_subdirectory: false
-        fix_name: php-fpm_exporter
-        service_opts:
-          - server
-        summary: A prometheus exporter for PHP-FPM. The exporter connects directly to PHP-FPM and exports the metrics via HTTP
-        description: |
-          A prometheus exporter for PHP-FPM
-  ipmi_exporter:
-    build_steps:
-      <<: *default_build_steps
-    context:
-      <<: *default_context
-      static:
-        <<: *default_static_context
-        version: 1.8.0
-        license: MIT
-        URL: https://github.com/prometheus-community/ipmi_exporter
-        service_opts:
-          - --config.file==/etc/prometheus/ipmi.yml
-        additional_sources:
-          - path: https://raw.githubusercontent.com/prometheus-community/%{name}/v%{version}/ipmi_local.yml
-            dest: '%{_sysconfdir}/prometheus/%{name}.yml'
-            from_tarball: false
-        summary: Prometheus exporter for IPMI metrics
-        description: |
-          Prometheus exporter for IPMI metrics.
-  nats_exporter:
-    build_steps:
-      <<: *default_build_steps
-    context:
-      <<: *default_context
-      static:
-        <<: *default_static_context
-        version: 0.15.0
-        license: ASL 2.0
-        URL: https://github.com/nats-io/prometheus-nats-exporter
-        package: prometheus-nats-exporter-v%{version}-linux-x86_64
-        fix_name: prometheus-nats-exporter
-        tarball_has_subdirectory: false
-        service_opts:
-          - -varz http://localhost:8222
-        summary: A prometheus exporter for NATS
-        description: |
-          A prometheus exporter for NATS
   cadvisor:
     build_steps:
       <<: *default_build_steps
@@ -612,7 +410,7 @@ packages:
       <<: *default_context
       static:
         <<: *default_static_context
-        version: 0.49.1
+        version: 0.49.2
         license: ASL 2.0
         URL: https://github.com/google/cadvisor
         user: root
@@ -627,32 +425,6 @@ packages:
       dynamic:
         <<: *default_dynamic_context
         tarball: '{{URL}}/releases/download/v%{version}/{{package}}'
-  dellhw_exporter:
-    build_steps:
-      <<: *default_build_steps
-    context:
-      <<: *default_context
-      static:
-        <<: *default_static_context
-        version: 1.13.12
-        license: ASL 2.0
-        URL: https://github.com/galexrt/dellhw_exporter
-        summary: Dell Hardware OMSA exporter
-        description: |
-          Prometheus exporter for Dell Hardware components using OMSA.
-  systemd_exporter:
-    build_steps:
-      <<: *default_build_steps
-    context:
-      <<: *default_context
-      static:
-        <<: *default_static_context
-        version: 0.6.0
-        license: ASL 2.0
-        URL: https://github.com/prometheus-community/systemd_exporter
-        summary: Prometheus exporter for systemd units, written in Go.
-        description: |
-          Systemd unit monitoring and resource usage
   bird_exporter:
     build_steps:
       <<: *default_build_steps
