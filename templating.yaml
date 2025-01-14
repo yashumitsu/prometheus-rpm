@@ -653,3 +653,17 @@ packages:
         summary: Prometheus exporter for systemd units, written in Go.
         description: |
           Systemd unit monitoring and resource usage
+  bird_exporter:
+    build_steps:
+      <<: *default_build_steps
+    context:
+      <<: *default_context
+      static:
+        <<: *default_static_context
+        version: 1.4.3
+        license: MIT
+        URL: https://github.com/czerwonk/bird_exporter
+        package: '%{name}_%{version}_linux_amd64'
+        summary: Bird routing daemon exporter
+        description: |
+          Metric exporter for bird routing daemon.
