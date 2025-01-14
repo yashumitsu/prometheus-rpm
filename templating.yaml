@@ -317,41 +317,6 @@ packages:
           - path: https://raw.githubusercontent.com/prometheus-community/%{name}/v%{version}/examples/config.yml
             dest: '%{_sysconfdir}/prometheus/%{name}.yaml'
             from_tarball: false
-  keepalived_exporter:
-    build_steps:
-      <<: *default_build_steps
-    context:
-      <<: *default_context
-      static:
-        <<: *default_static_context
-        version: 0.7.0
-        license: ASL 2.0
-        user: root
-        group: root
-        URL: https://github.com/gen2brain/keepalived_exporter
-        package: '%{name}-%{version}-amd64'
-        summary: Prometheus exporter for Keepalived metrics
-        description: Export Keepalived service metrics to Prometheus.
-      dynamic:
-        <<: *default_dynamic_context
-  jolokia_exporter:
-    build_steps:
-      <<: *default_build_steps
-    context:
-      <<: *default_context
-      static:
-        <<: *default_static_context
-        version: 1.3.1
-        license: MIT
-        release: 2
-        URL: https://github.com/jaxxstorm/jolokia_exporter
-        package: '%{name}_%{version}'
-        summary: Prometheus exporter for jolokia metrics
-        description: Export jolokia metrics to Prometheus.
-        tarball_has_subdirectory: false
-      dynamic:
-        <<: *default_dynamic_context
-        tarball: '{{URL}}/releases/download/%{version}/{{package}}_Linux_x86_64.tar.gz'
   pushgateway:
     build_steps:
       <<: *default_build_steps
@@ -368,34 +333,6 @@ packages:
           expose their metrics to Prometheus. Since these kinds of jobs may not
           exist long enough to be scraped, they can instead push their metrics to
           a Pushgateway. The Pushgateway then exposes these metrics to Prometheus.
-  frr_exporter:
-    build_steps:
-      <<: *default_build_steps
-    context:
-      <<: *default_context
-      static:
-        <<: *default_static_context
-        version: 1.2.0
-        license: MIT
-        user: frr
-        group: frr
-        URL: https://github.com/tynany/frr_exporter
-        summary: Prometheus exporter for FRR metrics
-        description: Export FRR service metrics to Prometheus.
-  domain_exporter:
-    build_steps:
-      <<: *default_build_steps
-    context:
-      <<: *default_context
-      static:
-        <<: *default_static_context
-        version: 1.23.0
-        license: MIT
-        URL: https://github.com/caarlos0/domain_exporter
-        package: '%{name}_%{version}_linux_amd64'
-        tarball_has_subdirectory: false
-        summary: Prometheus exporter for domain expiration time metrics
-        description: Exports the expiration time of your domains as Prometheus metrics.
   mongodb_exporter:
     build_steps:
       <<: *default_build_steps
@@ -409,21 +346,6 @@ packages:
         package: '%{name}-%{version}.linux-amd64'
         summary: A Prometheus exporter for MongoDB including sharding, replication and storage engines
         description: A Prometheus exporter for MongoDB including sharding, replication and storage engines
-  graphite_exporter:
-    build_steps:
-      <<: *default_build_steps
-    context:
-      <<: *default_context
-      static:
-        <<: *default_static_context
-        version: 0.15.1
-        license: ASL 2.0
-        URL: https://github.com/prometheus/graphite_exporter
-        summary: Server that accepts metrics via the Graphite protocol and exports them as Prometheus metrics.
-        description: |
-          An exporter for metrics exported in the Graphite plaintext protocol. It
-          accepts data over both TCP and UDP, and transforms and exposes them for
-          consumption by Prometheus.
   statsd_exporter:
     build_steps:
       <<: *default_build_steps
@@ -437,22 +359,6 @@ packages:
         summary: Export StatsD metrics in Prometheus format.
         description: |
           Exporter receives StatsD-style metrics and exports them as Prometheus metrics.
-  collectd_exporter:
-    build_steps:
-      <<: *default_build_steps
-    context:
-      <<: *default_context
-      static:
-        <<: *default_static_context
-        version: 0.6.0
-        license: ASL 2.0
-        URL: https://github.com/prometheus/collectd_exporter
-        summary: Collectd stats exporter for Prometheus.
-        description: |
-          Collectd stats exporter for Prometheus. It accepts collectd's binary network
-          protocol as sent by collectd's network plugin and metrics in JSON format via
-          HTTP POST as sent by collectd's write_http plugin, and transforms and exposes
-          them for consumption by Prometheus.
   memcached_exporter:
     build_steps:
       <<: *default_build_steps
@@ -522,19 +428,6 @@ packages:
         summary: Prometheus exporter Apache webserver mertics.
         description: |
           Prometheus exporter for Apache mod_status statistics.
-  influxdb_exporter:
-    build_steps:
-      <<: *default_build_steps
-    context:
-      <<: *default_context
-      static:
-        <<: *default_static_context
-        version: 0.11.5
-        license: ASL 2.0
-        URL: https://github.com/prometheus/influxdb_exporter
-        summary: InfluxDB stats exporter for Prometheus.
-        description: |
-          A server that accepts InfluxDB metrics via the HTTP API and exports them via HTTP for Prometheus consumption.
   exporter_exporter:
     build_steps:
       <<: *default_build_steps
@@ -556,54 +449,6 @@ packages:
           binary alternative to nginx/apache for use in environments where opening
           multiple TCP ports to all servers might be difficult (technically or
           politically).
-  junos_exporter:
-    build_steps:
-      <<: *default_build_steps
-    context:
-      <<: *default_context
-      static:
-        <<: *default_static_context
-        version: 0.12.3
-        license: MIT
-        URL: https://github.com/czerwonk/junos_exporter
-        package: prometheus-junos-exporter_%{version}_linux_amd64
-        tarball_has_subdirectory: false
-        additional_sources:
-          - path: '%{name}.yaml'
-            dest: '%{_sysconfdir}/prometheus/%{name}.yaml'
-            group: '%{group}'
-            mode: 640
-        service_opts:
-          - --config.file=/etc/prometheus/junos_exporter.yaml
-        summary: Prometheus exporter for Junos device metrics.
-        description: |
-          Prometheus exporter for Junos device metrics.
-      dynamic:
-        <<: *default_dynamic_context
-        tarball: '{{URL}}/releases/download/%{version}/{{package}}.tar.gz'
-  openstack_exporter:
-    build_steps:
-      <<: *default_build_steps
-    context:
-      <<: *default_context
-      static:
-        <<: *default_static_context
-        version: 1.7.0
-        license: MIT
-        URL: https://github.com/openstack-exporter/openstack-exporter
-        package: openstack-exporter_%{version}_linux_amd64
-        fix_name: openstack-exporter
-        tarball_has_subdirectory: false
-        additional_sources:
-          - path: '%{name}_clouds.yaml'
-            dest: '%{_sysconfdir}/prometheus/%{name}_clouds.yaml'
-            group: '%{group}'
-            mode: 640
-        service_opts:
-          - --os-client-config=/etc/prometheus/openstack_exporter_clouds.yaml
-        summary: Prometheus exporter for OpenStack metrics.
-        description: |
-          OpenStack exporter for Prometheus written in Golang using the gophercloud library.
   process_exporter:
     build_steps:
       <<: *default_build_steps
@@ -647,59 +492,6 @@ packages:
           probes, local files or Kubernetes secrets. The metrics are labelled with fields
           from the certificate, which allows for informational dashboards and flexible
           alert routing.
-  sachet:
-    build_steps:
-      <<: *default_build_steps
-    context:
-      <<: *default_context
-      static:
-        <<: *default_static_context
-        version: 0.3.1
-        license: BSD
-        URL: https://github.com/messagebird/sachet
-        additional_sources:
-          - path: https://raw.githubusercontent.com/messagebird/%{name}/%{version}/examples/config.yaml
-            dest: '%{_sysconfdir}/prometheus/%{name}.yml'
-            mode: 640
-            group: '%{group}'
-        service_opts:
-          - --config=/etc/prometheus/sachet.yml
-        summary: SMS alerts for Prometheus Alertmanager.
-        description: |
-          Sachet is Hindi for conscious. Sachet is an SMS alerting tool for the
-          Prometheus Alertmanager.
-      dynamic:
-        <<: *default_dynamic_context
-        tarball: '{{URL}}/releases/download/%{version}/{{package}}.tar.gz'
-  jiralert:
-    build_steps:
-      <<: *default_build_steps
-    context:
-      <<: *default_context
-      static:
-        <<: *default_static_context
-        version: 1.0
-        release: 2
-        license: ASL 2.0
-        URL: https://github.com/prometheus-community/jiralert
-        service_opts:
-          - --config=/etc/prometheus/jiralert.yml
-        additional_sources:
-          - path: config/jiralert.yml
-            dest: '%{_sysconfdir}/prometheus/%{name}.yml'
-            from_tarball: true
-            group: '%{group}'
-            mode: 640
-          - path: config/jiralert.tmpl
-            dest: '%{_sysconfdir}/prometheus/%{name}.tmpl'
-            from_tarball: true
-        summary: Prometheus Alertmanager webhook receiver for JIRA
-        description: |
-          JIRAlert implements Alertmanager's webhook HTTP API and connects to one or more
-          JIRA instances to create highly configurable JIRA issues.
-      dynamic:
-        <<: *default_dynamic_context
-        tarball: '{{URL}}/releases/download/%{version}/{{package}}.tar.gz'
   ebpf_exporter:
     build_steps:
       <<: *default_build_steps
@@ -741,23 +533,6 @@ packages:
         summary: Alert dashboard for Prometheus Alertmanager
         description: |
           Alert dashboard for Prometheus Alertmanager.
-  bareos_exporter:
-    build_steps:
-      <<: *default_build_steps
-    context:
-      <<: *default_context
-      static:
-        <<: *default_static_context
-        version: 0.6.0
-        license: MIT
-        URL: https://github.com/vierbergenlars/bareos_exporter
-        package: '%{name}-v%{version}-linux-amd64'
-        tarball_has_subdirectory: false
-        service_opts:
-          - -dsn=postgres://bareos:bareospw@localhost/bareos?readOnly=true
-        summary: Prometheus exporter for BareOS data recovery system
-        description: |
-          Prometheus exporter for BareOS data recovery system.
   artifactory_exporter:
     build_steps:
       <<: *default_build_steps
@@ -830,36 +605,6 @@ packages:
         summary: A prometheus exporter for NATS
         description: |
           A prometheus exporter for NATS
-  prometheus_msteams:
-    build_steps:
-      <<: *default_build_steps
-    context:
-      <<: *default_context
-      static:
-        <<: *default_static_context
-        version: 1.5.1
-        license: MIT
-        URL: https://github.com/prometheus-msteams/prometheus-msteams
-        package: prometheus-msteams-linux-amd64
-        service_opts:
-          - --config.file=/etc/prometheus/prometheus_msteams.yml
-          - --template-file=/etc/prometheus/prometheus_msteams_message_card.tmpl
-          - --log-format=fmt
-          - --debug=false
-        additional_sources:
-          - path: '%{name}.yml'
-            dest: '%{_sysconfdir}/prometheus/%{name}.yml'
-            group: '%{group}'
-            mode: 640
-          - path: https://github.com/prometheus-msteams/prometheus-msteams/releases/download/v%{version}/default-message-card.tmpl
-            dest: '%{_sysconfdir}/prometheus/%{name}_message_card.tmpl'
-            from_tarball: false
-        summary: Alertmanager to Microsoft Teams gateway
-        description: |
-          A lightweight Go Web Server that receives POST alert messages from Prometheus Alertmanager and sends it to a Microsoft Teams Channel using an incoming webhook url.
-      dynamic:
-        <<: *default_dynamic_context
-        tarball: '{{URL}}/releases/download/v%{version}/{{package}}'
   cadvisor:
     build_steps:
       <<: *default_build_steps
@@ -882,26 +627,6 @@ packages:
       dynamic:
         <<: *default_dynamic_context
         tarball: '{{URL}}/releases/download/v%{version}/{{package}}'
-  squid_exporter:
-    build_steps:
-      <<: *default_build_steps
-    context:
-      <<: *default_context
-      static:
-        <<: *default_static_context
-        version: 1.12.0
-        license: MIT
-        URL: https://github.com/boynux/squid-exporter
-        package: squid-exporter-linux-amd64
-        service_opts:
-          - --listen=0.0.0.0:9301
-        caps: cap_dac_read_search=ep
-        summary: Prometheus Squid proxy metric exporter
-        description: |
-          Exports Squid proxy metrics in Prometheus format
-      dynamic:
-        <<: *default_dynamic_context
-        tarball: '{{URL}}/releases/download/v%{version}/{{package}}'
   dellhw_exporter:
     build_steps:
       <<: *default_build_steps
@@ -915,22 +640,6 @@ packages:
         summary: Dell Hardware OMSA exporter
         description: |
           Prometheus exporter for Dell Hardware components using OMSA.
-  exim_exporter:
-    build_steps:
-      <<: *default_build_steps
-    context:
-      <<: *default_context
-      static:
-        <<: *default_static_context
-        version: 1.6.1
-        license: MIT
-        URL: https://github.com/gvengel/exim_exporter
-        user: exim
-        package: '%{name}_%{version}_linux_amd64'
-        tarball_has_subdirectory: false
-        summary: Prometheus exporter for the exim4 mail server.
-        description: |
-          Prometheus exporter for the exim4 mail server.
   systemd_exporter:
     build_steps:
       <<: *default_build_steps

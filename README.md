@@ -1,6 +1,6 @@
 # Prometheus RPM Packages
 
-![Build Status](https://github.com/lest/prometheus-rpm/actions/workflows/build.yml/badge.svg) ![Lint Status](https://github.com/lest/prometheus-rpm/actions/workflows/linter.yml/badge.svg) ![Update Status](https://github.com/lest/prometheus-rpm/actions/workflows/check_new_versions.yml/badge.svg)
+![Build Status](https://github.com/yashumitsu/prometheus-rpm/actions/workflows/build.yml/badge.svg) ![Lint Status](https://github.com/yashumitsu/prometheus-rpm/actions/workflows/linter.yml/badge.svg) ![Update Status](https://github.com/yashumitsu/prometheus-rpm/actions/workflows/check_new_versions.yml/badge.svg)
 
 The repository contains the files needed to build [Prometheus][1] RPM packages
 for CentOS 7 & 8 and CentOS Stream 9.
@@ -17,7 +17,7 @@ baseurl=https://packagecloud.io/prometheus-rpm/release/el/$releasever/$basearch
 repo_gpgcheck=1
 enabled=1
 gpgkey=https://packagecloud.io/prometheus-rpm/release/gpgkey
-       https://raw.githubusercontent.com/lest/prometheus-rpm/master/RPM-GPG-KEY-prometheus-rpm
+       https://raw.githubusercontent.com/yashumitsu/prometheus-rpm/master/RPM-GPG-KEY-prometheus-rpm
 gpgcheck=1
 metadata_expire=300
 ```

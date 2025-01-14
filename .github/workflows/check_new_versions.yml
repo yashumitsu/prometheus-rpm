@@ -26,4 +26,4 @@ jobs:
       - name: Run script to update auto package versions
         run: python update_templating_versions.py
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
