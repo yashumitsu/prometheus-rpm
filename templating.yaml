@@ -667,3 +667,6 @@ packages:
         summary: Bird routing daemon exporter
         description: |
           Metric exporter for bird routing daemon.
+      dynamic:
+        <<: *default_dynamic_context
+        tarball: '{{URL}}/releases/download/%{version}/{{package}}.tar.gz'
