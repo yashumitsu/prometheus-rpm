@@ -22,8 +22,6 @@ jobs:
           - manual
         version:
           - 9
-          - 8
-          - 7
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout repository
@@ -50,13 +48,11 @@ jobs:
 
   publish_packages:
     needs: build_packages
-    if: github.ref == 'refs/heads/master' && github.repository == 'lest/prometheus-rpm'
+    if: github.ref == 'refs/heads/master' && github.repository == 'yashumitsu/prometheus-rpm'
     strategy:
       matrix:
         version:
           - 9
-          - 8
-          - 7
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout repository
@@ -72,7 +68,7 @@ jobs:
 
       - name: Create GPG key secret
         if: env.RPM_GPG_KEY_SECRET != null
-        run: openssl aes-256-cbc -k "${RPM_GPG_KEY_SECRET}" -in secret.asc.enc -out secret.asc -d -md md5
+        run: openssl aes-256-cbc -k "${RPM_GPG_KEY_SECRET}" -in secret.asc.enc -out secret.asc -d -iter 256
         env:
           RPM_GPG_KEY_SECRET: ${{ secrets.RPM_GPG_KEY_SECRET }}
 

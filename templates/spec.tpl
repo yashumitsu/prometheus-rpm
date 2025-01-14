@@ -30,17 +30,8 @@ Source{{ loop.index - 1 + sources | length }}: {{ additional_source.path }}
 {% endblock sources %}
 
 {%- block requires %}
-%if 0%{?fedora} >= 19
-BuildRequires: systemd-rpm-macros
-%endif
 %{?systemd_requires}
 Requires(pre): shadow-utils
-%if 0%{?el6} || 0%{?el5}
-Requires(post): chkconfig
-Requires(preun): chkconfig
-# This is for /sbin/service
-Requires(preun): initscripts
-%endif
 {% endblock requires %}
 
 %description
@@ -85,15 +76,7 @@ install -D -m 755 %{name} %{buildroot}%{_bindir}/%{name}
 install -D -m 755 %{SOURCE0} %{buildroot}%{_bindir}/%{name}
 {%- endif %}
 install -D -m 644 %{SOURCE2} %{buildroot}%{_sysconfdir}/default/%{name}
-%if 0%{?el5}
-install -D -m 755 %{SOURCE3} %{buildroot}%{_initrddir}/%{name}
-%else
-    %if 0%{?el6}
-    install -D -m 755 %{SOURCE3} %{buildroot}%{_initddir}/%{name}
-    %else
-    install -D -m 644 %{SOURCE1} %{buildroot}%{_unitdir}/%{name}.service
-    %endif
-%endif
+install -D -m 644 %{SOURCE1} %{buildroot}%{_unitdir}/%{name}.service
 {%- if additional_sources is defined %}
 {%- for additional_source in additional_sources %}
 install -D -m {{ additional_source.mode|d('644') }} {{ additional_source.path if additional_source.from_tarball|d(false) else '%{SOURCE' ~ (loop.index - 1 + sources | length) ~ '}' }} %{buildroot}{{ additional_source.dest }}
@@ -128,11 +111,7 @@ exit 0
 
 %post
 {%- block post %}
-%if 0%{?el6} || 0%{?el5}
-chkconfig --add %{name}
-%else
 %systemd_post %{name}.service
-%endif
 {%- for post_cmd in post_cmds %}
 {{ post_cmd }}
 {%- endfor %}
@@ -140,14 +119,7 @@ chkconfig --add %{name}
 
 %preun
 {%- block preun %}
-%if 0%{?el6} || 0%{?el5}
-if [ $1 -eq 0 ] ; then
-    service %{name} stop > /dev/null 2>&1
-    chkconfig --del %{name}
-fi
-%else
 %systemd_preun %{name}.service
-%endif
 {%- for preun_cmd in preun_cmds %}
 {{ preun_cmd }}
 {%- endfor %}
@@ -155,13 +127,7 @@ fi
 
 %postun
 {%- block postun %}
-%if 0%{?el6} || 0%{?el5}
-if [ "$1" -ge "1" ] ; then
-    service %{name} condrestart >/dev/null 2>&1 || :
-fi
-%else
-%systemd_postun %{name}.service
-%endif
+%systemd_postun_with_restart %{name}.service
 {%- for postun_cmd in postun_cmds %}
 {{ postun_cmd }}
 {%- endfor %}
@@ -177,15 +143,7 @@ fi
 {%- else %}
 %dir %attr(755, %{user}, %{group}) %{_sharedstatedir}/%{name}
 {%- endif %}
-%if 0%{?el5}
-%{_initrdddir}/%{name}
-%else
-    %if 0%{?el6}
-    %{_initddir}/%{name}
-    %else
-    %{_unitdir}/%{name}.service
-    %endif
-%endif
+%{_unitdir}/%{name}.service
 {%- if additional_sources is defined %}
 {%-   for additional_source in additional_sources %}
 {% if additional_source.config|d(true) %}%config(noreplace) {% endif %}{% if additional_source.mode is defined or additional_source.user is defined or additional_source.group is defined %}%attr({{ additional_source.mode|d('-') }}, {{ additional_source.user|d('-') }}, {{ additional_source.group|d('-') }}){% endif %}{{ additional_source.dest }}

@@ -1,6 +1,6 @@
 # Prometheus RPM Packages
 
-![Build Status](https://github.com/lest/prometheus-rpm/actions/workflows/build.yml/badge.svg) ![Lint Status](https://github.com/lest/prometheus-rpm/actions/workflows/linter.yml/badge.svg) ![Update Status](https://github.com/lest/prometheus-rpm/actions/workflows/check_new_versions.yml/badge.svg)
+![Build Status](https://github.com/yashumitsu/prometheus-rpm/actions/workflows/build.yml/badge.svg) ![Lint Status](https://github.com/yashumitsu/prometheus-rpm/actions/workflows/linter.yml/badge.svg) ![Update Status](https://github.com/yashumitsu/prometheus-rpm/actions/workflows/check_new_versions.yml/badge.svg)
 
 The repository contains the files needed to build [Prometheus][1] RPM packages
 for CentOS 7 & 8 and CentOS Stream 9.
@@ -11,13 +11,13 @@ by adding the following `/etc/yum.repos.d/prometheus.repo`:
 
 ### CentOS
 ``` conf
-[prometheus]
+[prometheus-rpm]
 name=prometheus
-baseurl=https://packagecloud.io/prometheus-rpm/release/el/$releasever/$basearch
+baseurl=https://packagecloud.io/yashumitsu/prometheus-rpm/release/el/$releasever/$basearch
 repo_gpgcheck=1
 enabled=1
-gpgkey=https://packagecloud.io/prometheus-rpm/release/gpgkey
-       https://raw.githubusercontent.com/lest/prometheus-rpm/master/RPM-GPG-KEY-prometheus-rpm
+gpgkey=https://packagecloud.io/yashumitsu/prometheus-rpm/prometheus-rpm/release/gpgkey
+       https://raw.githubusercontent.com/yashumitsu/prometheus-rpm/master/RPM-GPG-KEY-prometheus-rpm
 gpgcheck=1
 metadata_expire=300
 ```
@@ -54,7 +54,7 @@ The resulting RPMs will be created in the `_dist7` or `_dist8` directories depen
 ## Ansible role
 
 An [Ansible][3] role which installs Prometheus packages from these RPMs is
-available in [Github][4] or in [Galaxy][5].
+available in [GitHub][4] or in [Galaxy][5].
 
 [1]: https://prometheus.io
 [2]: https://packagecloud.io/prometheus-rpm/release
