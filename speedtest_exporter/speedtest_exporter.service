@@ -1,0 +1,14 @@
+[Unit]
+Description=Speedtest exporter
+Documentation=https://github.com/heathcliff26/speedtest-exporter
+After=network.target
+
+[Service]
+EnvironmentFile=-/etc/default/speedtest_exporter
+User=prometheus 
+ExecStart=/usr/bin/speedtest_exporter $SPEEDTEST_EXPORTER_OPTS
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
