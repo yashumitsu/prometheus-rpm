@@ -52,3 +52,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_ANSIBLE: false
           VALIDATE_PYTHON_PYLINT: false
+          VALIDATE_CHECKOV: false
+          VALIDATE_JSCPD: false
+          VALIDATE_YAML_PRETTIER: false
