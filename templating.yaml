@@ -452,7 +452,7 @@ packages:
       <<: *default_context
       static:
         <<: *default_static_context
-        version: 0.0.92
+        version: 0.0.93
         license: MIT
         URL: https://github.com/jacksontj/promxy
         service_opts:
