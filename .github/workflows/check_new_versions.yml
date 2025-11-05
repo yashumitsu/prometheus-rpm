@@ -8,6 +8,10 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   check_new_releases:
     runs-on: ubuntu-24.04
@@ -27,3 +31,10 @@ jobs:
         run: python update_templating_versions.py
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Enable auto-merge for PRs created by this workflow
+        if: github.actor == 'github-actions[bot]'
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          merge_method: squash
