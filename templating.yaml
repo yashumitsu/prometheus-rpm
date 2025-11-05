@@ -124,14 +124,9 @@ packages:
         service_opts:
           - --config.file=/etc/prometheus/sql_exporter.yml
         additional_sources:
-          - path: sql_exporter.yml
+          - path: https://raw.githubusercontent.com/burningalchemist/%{name}/%{version}/documentation/sql_exporter.yml
             dest: '%{_sysconfdir}/prometheus/sql_exporter.yml'
-            from_tarball: true
-            mode: 640
-            group: '%{group}'
-          - path: mssql_standard.collector.yml
-            dest: '%{_sysconfdir}/prometheus/mssql_standard.collector.yml'
-            from_tarball: true
+            from_tarball: false
             mode: 640
             group: '%{group}'
         summary: SQL exporter
