@@ -1,4 +1,5 @@
-MANUAL = jmx_exporter
+MANUAL = jmx_exporter \
+prometheus
 
 AUTO_GENERATED = alertmanager \
 node_exporter \
