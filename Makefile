@@ -24,7 +24,8 @@ artifactory_exporter \
 sql_exporter \
 cadvisor \
 bird_exporter \
-promxy
+promxy \
+postfix_exporter
 
 .PHONY: $(MANUAL) $(AUTO_GENERATED)
 

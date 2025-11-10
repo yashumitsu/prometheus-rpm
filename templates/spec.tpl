@@ -29,6 +29,12 @@ Source{{ loop.index - 1 + sources | length }}: {{ additional_source.path }}
 {%- endif %}
 {% endblock sources %}
 
+{%- block build_requires %}
+{%- for build_require in build_requires %}
+BuildRequires: {{ build_require }}
+{%- endfor %}
+{% endblock build_requires %}
+
 {%- block requires %}
 %{?systemd_requires}
 Requires(pre): shadow-utils
