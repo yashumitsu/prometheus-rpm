@@ -463,3 +463,28 @@ packages:
       dynamic:
         <<: *default_dynamic_context
         tarball: '{{URL}}/releases/download/v%{version}/{{package}}'
+  postfix_exporter:
+    build_steps:
+      <<: *default_build_steps
+    context:
+      <<: *default_context
+      static:
+        <<: *default_static_context
+        version: 0.3.0
+        license: ASL 2.0
+        URL: https://github.com/kumina/postfix_exporter
+        summary: Prometheus exporter for Postfix metrics
+        description: |
+          Prometheus metrics exporter for the Postfix mail server. This exporter provides histogram metrics for the size and age of messages stored in the mail queue.
+        package: '%{name}-v%{version}-linux-amd64'
+        tarball_has_subdirectory: false
+      dynamic:
+        <<: *default_dynamic_context
+        source:
+          type: git
+          url: '{{URL}}'
+          tag: v%{version}
+        build:
+          type: go
+          main: .
+          output: postfix_exporter
