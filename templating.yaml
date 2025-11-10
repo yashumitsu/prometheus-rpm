@@ -23,6 +23,7 @@ anchors:
       #     user: root          # optional
       #     group: root         # optional
       #     config: true        # specify not to override config files
+      build_requires: []
       prep_cmds: []
       build_cmds:
         - /bin/true
@@ -476,15 +477,14 @@ packages:
         summary: Prometheus exporter for Postfix metrics
         description: |
           Prometheus metrics exporter for the Postfix mail server. This exporter provides histogram metrics for the size and age of messages stored in the mail queue.
-        package: '%{name}-v%{version}-linux-amd64'
-        tarball_has_subdirectory: false
+        package: '%{name}-%{version}'
+        tarball_has_subdirectory: true
+        build_requires:
+          - golang
+        build_cmds:
+          - 'go build -tags nosystemd -o %{name}'
+        user: root
+        group: root
       dynamic:
         <<: *default_dynamic_context
-        source:
-          type: git
-          url: '{{URL}}'
-          tag: v%{version}
-        build:
-          type: go
-          main: .
-          output: postfix_exporter
+        tarball: '{{URL}}/archive/refs/tags/%{version}.tar.gz'
