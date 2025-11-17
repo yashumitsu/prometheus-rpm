@@ -440,7 +440,7 @@ packages:
           Metric exporter for bird routing daemon.
       dynamic:
         <<: *default_dynamic_context
-        tarball: '{{URL}}/releases/download/%{version}/{{package}}.tar.gz'
+        tarball: '{{URL}}/releases/download/v%{version}/{{package}}.tar.gz'
   promxy:
     build_steps:
       <<: *default_build_steps
