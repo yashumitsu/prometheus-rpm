@@ -428,7 +428,7 @@ packages:
       <<: *default_context
       static:
         <<: *default_static_context
-        version: 1.4.4
+        version: 1.4.5
         license: MIT
         URL: https://github.com/czerwonk/bird_exporter
         user: bird
