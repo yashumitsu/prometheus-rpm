@@ -1,0 +1,103 @@
+# Kafka Lag Exporter Configuration
+
+[exporter]
+# How often to poll Kafka for offsets (default: 30s)
+poll_interval = "10s"
+
+# HTTP server settings for Prometheus endpoint
+http_port = "${KLAG_PROMETHEUS_PORT}"
+http_host = "${KLAG_PROMETHEUS_HOST}"
+
+# Metric granularity: "topic" (default) or "partition"
+# "topic" aggregates per-topic, "partition" includes partition-level metrics
+granularity = "topic"
+
+[exporter.timestamp_sampling]
+# Enable time lag calculation
+enabled = true
+
+# Time-lag estimation mode:
+#   "rate"    - (default) Estimate from observed high-watermark production
+#               rate. No consumer pool, no FFI, scales to any cluster size.
+#   "message" - Read the actual Kafka message at the committed offset and
+#               use its produce timestamp. Exact, but requires a pooled
+#               BaseConsumer per concurrent fetch (~5-15 MB each).
+mode = "rate"
+
+# Rate-mode settings (ignored when mode = "message"):
+# rate_history_samples = 5       # watermark observations per partition
+# rate_history_max_age = "10m"   # evict samples older than this
+# rate_min_msgs_per_sec = 0.01   # below this rate → time lag missing
+
+[exporter.performance]
+# Timeout for Kafka API operations (metadata, watermarks, etc.)
+kafka_timeout = "30s"
+
+# Timeout for fetching committed offsets per consumer group
+# offset_fetch_timeout = "10s"
+
+# Maximum consumer groups to fetch offsets for in parallel
+# max_concurrent_groups = 10
+
+# Maximum partitions to fetch watermarks for in parallel
+# max_concurrent_watermarks = 50
+
+# Client recycling interval (number of collection cycles).
+#
+# librdkafka caches internal topic handles that are never freed until the
+# client is destroyed. On large clusters with many topics (especially with
+# topic churn — topics being created and deleted), this cache grows
+# unboundedly and can consume gigabytes of memory.
+#
+# Recycling periodically destroys and recreates the internal Kafka clients,
+# releasing all accumulated metadata. The trade-off is a brief allocation
+# spike during the swap (~2-10 MB depending on cluster size).
+#
+# Guidelines:
+#   0   = disabled (recommended for small/stable clusters)
+#   50  = default (~25 min at 30s poll; good for large clusters)
+#   100 = less frequent (lower overhead, more metadata accumulation)
+#
+# client_recycle_interval = 50
+
+[exporter.otel]
+# Enable OpenTelemetry export (default: false)
+enabled = false
+
+# OTLP endpoint (gRPC)
+#endpoint = "http://localhost:4317"
+
+# How often to push metrics to OTLP
+#export_interval = "60s"
+
+# Kafka cluster configuration
+# You can define multiple [[clusters]] sections for multi-cluster monitoring
+
+[[clusters]]
+# Unique name for this cluster (used in metric labels)
+name = "${KLAG_KAFKA_CLUSTER_NAME}"
+
+# Kafka bootstrap servers (comma-separated)
+bootstrap_servers = "${KLAG_KAFKA_BOOTSTRAP_SERVERS}"
+
+# Consumer group filters (regex patterns)
+# Groups matching whitelist AND not matching blacklist will be monitored
+group_whitelist = [".*"]
+group_blacklist = []
+
+# Topic filters (regex patterns)
+topic_whitelist = [".*"]
+topic_blacklist = ["^__.*"]  # Exclude internal topics like __consumer_offsets
+
+# Additional Kafka consumer properties
+# Use ${ENV_VAR} syntax for environment variable substitution
+[clusters.consumer_properties]
+# Uncomment and configure for SASL authentication:
+"security.protocol" = "${KLAG_KAFKA_SECURITY_PROTOCOL}"
+"sasl.mechanism" = "${KLAG_KAFKA_SASL_MECHANISM}"
+"sasl.username" = "${KLAG_KAFKA_USER}"
+"sasl.password" = "${KLAG_KAFKA_PASSWORD}"
+"enable.ssl.certificate.verification" = "false"
+
+# Custom labels added to all metrics for this cluster
+[clusters.labels]
