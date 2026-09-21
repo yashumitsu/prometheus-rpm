@@ -1,0 +1,13 @@
+{% extends "unit.tpl" %}
+
+{% block service -%}
+EnvironmentFile=-/etc/default/{{ name }}
+User={{ user }}
+ExecStart=/usr/bin/{{ name }} $KLAG_EXPORTER_OPTS
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=on-failure
+RestartSec=5s
+{% if open_file_limit is defined -%}
+LimitNOFILE={{ open_file_limit }}
+{% endif %}
+{%- endblock service %}

@@ -244,7 +244,10 @@ packages:
         description: Kafka exporter for Prometheus.
   klag-exporter:
     build_steps:
-      <<: *default_build_steps
+      default: '{% extends "default.tpl" %}'
+      spec:    '{% extends "spec.tpl" %}'
+      unit:    '{% extends "klag-exporter.unit.j2" %}'
+      init:    '{% extends "init.tpl" %}'
     context:
       <<: *default_context
       static:
