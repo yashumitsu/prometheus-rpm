@@ -6,9 +6,9 @@ Documentation=https://github.com/softwaremill/klag-exporter
 After=network.target
 
 [Service]
-EnvironmentFile=-/etc/default/klag_exporter
+EnvironmentFile=-/etc/default/klag-exporter
 User=prometheus
-ExecStart=/usr/bin/klag_exporter $KLAG_EXPORTER_OPTS
+ExecStart=/usr/bin/klag-exporter $KLAG_EXPORTER_OPTS
 ExecReload=/bin/kill -HUP $MAINPID
 Restart=on-failure
 RestartSec=5

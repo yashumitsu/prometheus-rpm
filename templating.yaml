@@ -242,7 +242,7 @@ packages:
         URL: https://github.com/danielqsj/kafka_exporter
         summary: Kafka exporter for Prometheus.
         description: Kafka exporter for Prometheus.
-  klag_exporter:
+  klag-exporter:
     build_steps:
       <<: *default_build_steps
     context:
@@ -258,6 +258,7 @@ packages:
           written in Rust. It calculates both offset lag and time lag (latency in seconds)
           with accurate timestamp-based measurements, and exposes metrics natively via
           Prometheus HTTP endpoint and OpenTelemetry OTLP.
+        package: '%{name}-%{version}'
         build_requires:
           - rust >= 1.78
           - cargo
@@ -279,6 +280,23 @@ packages:
           - systemd
         build_cmds:
           - cargo build --release
+          - cp target/release/klag-exporter ./klag-exporter
+        additional_sources:
+          - path: klag-exporter.toml          # имя файла в репозитории/каталоге сборщика
+            from_tarball: false               # брать из репо сборщика, не из tarball
+            dest: '%{_sysconfdir}/klag-exporter/klag-exporter.toml'
+            mode: 644
+            user: root
+            group: root
+            config: true
+      dynamic:
+        <<: *default_dynamic_context
+        tarball: '{{URL}}/archive/refs/tags/v{{version}}.tar.gz'
+        sources:
+          - '{{tarball}}'
+          - autogen_%{name}.unit
+          - autogen_%{name}.default
+          - autogen_%{name}.init
   pushgateway:
     build_steps:
       <<: *default_build_steps

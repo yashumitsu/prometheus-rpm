@@ -2,14 +2,20 @@
 %global _debugsource_template %{nil}
 %global debug_package %{nil}
 
-Name:           klag_exporter
+# https://github.com/softwaremill/klag-exporter
+%global gh_owner      softwaremill
+%global gh_project    klag-exporter
+%global upstream_tag  v0.1.27
+%global upstream_arch linux-x86_64
+
+Name:           klag-exporter
 Version:        0.1.27
 Release:        1%{?dist}
 Summary:        High-performance Kafka consumer group lag exporter for Prometheus and OTLP
 License:        MIT
 URL:            https://github.com/%{gh_owner}/%{gh_project}
 
-Source0:        %{url}/archive/refs/tags/%{upstream_tag}.tar.gz#/%{name}-%{version}.tar.gz
+Source0:		%{url}/archive/refs/tags/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
 Source1:        %{name}.service
 Source2:        %{name}.default
 # --- Klag exporter config defaults ---
