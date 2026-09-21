@@ -258,6 +258,27 @@ packages:
           written in Rust. It calculates both offset lag and time lag (latency in seconds)
           with accurate timestamp-based measurements, and exposes metrics natively via
           Prometheus HTTP endpoint and OpenTelemetry OTLP.
+        build_requires:
+          - rust >= 1.78
+          - cargo
+          - cmake
+          - gcc
+          - gcc-c++
+          - make
+          - pkgconfig
+          - clang-devel
+          - openssl-devel
+          - cyrus-sasl-devel
+          - zlib-devel
+          - libcurl-devel
+          - lz4-devel
+          - libzstd-devel
+          - python3
+          - openssl-libs
+          - cyrus-sasl-lib
+          - systemd
+        build_cmds:
+          - cargo build --release
   pushgateway:
     build_steps:
       <<: *default_build_steps

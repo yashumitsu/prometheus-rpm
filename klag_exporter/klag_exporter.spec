@@ -15,42 +15,11 @@ Source2:        %{name}.default
 # --- Klag exporter config defaults ---
 Source3:		%{name}.toml
 
-# --- Rust toolchain ---
-BuildRequires:  rust >= 1.78
-BuildRequires:  cargo
-
-# --- C/C++ компиляция (для bundled librdkafka) ---
-BuildRequires:  cmake
-BuildRequires:  gcc
-BuildRequires:  gcc-c++
-BuildRequires:  make
-BuildRequires:  pkgconfig
-
-# --- libclang (для bindgen) ---
-BuildRequires:  clang-devel
-
-# --- Зависимости librdkafka (SSL, SASL, сжатие, OAuth) ---
-BuildRequires:  openssl-devel
-BuildRequires:  cyrus-sasl-devel
-BuildRequires:  zlib-devel
-BuildRequires:  libcurl-devel
-BuildRequires:  lz4-devel
-BuildRequires:  libzstd-devel
-
-# --- Python (используется в сборочных скриптах librdkafka) ---
-BuildRequires:  python3
-
 # --- systemd integration ---
 %{?systemd_requires}
 %if 0%{?fedora} >= 19
 BuildRequires:  systemd-rpm-macros
 %endif
-
-# --- Runtime dependencies ---
-# librdkafka компилируется статически, но openssl / sasl линкуются динамически
-Requires:       openssl-libs
-Requires:       cyrus-sasl-lib
-Requires:       systemd
 
 %description
 klag-exporter is a high-performance Apache Kafka consumer group lag exporter
@@ -60,21 +29,6 @@ Prometheus HTTP endpoint and OpenTelemetry OTLP.
 
 %prep
 %autosetup -n %{gh_project}-%{version}
-
-# Готовим оффлайн-сборку Cargo: скачиваем все крейты в vendor/
-cargo vendor --locked vendor
-mkdir -p .cargo
-cat > .cargo/config.toml <<'EOF'
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-EOF
-
-%build
-# Собираем релизный бинарник. rdkafka по умолчанию собирает librdkafka из bundled-сорцов.
-cargo build --release --offline
 
 %install
 install -Dpm0755 target/release/klag-exporter %{buildroot}%{_bindir}/%{name}
