@@ -245,9 +245,9 @@ packages:
   klag-exporter:
     build_steps:
       default: '{% extends "default.tpl" %}'
-      spec:    '{% extends "spec.tpl" %}'
-      unit:    '{% extends "klag-exporter.unit.j2" %}'
-      init:    '{% extends "init.tpl" %}'
+      spec: '{% extends "spec.tpl" %}'
+      unit: '{% extends "klag-exporter.unit.j2" %}'
+      init: '{% extends "init.tpl" %}'
     context:
       <<: *default_context
       static:
