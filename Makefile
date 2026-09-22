@@ -25,7 +25,8 @@ sql_exporter \
 cadvisor \
 bird_exporter \
 promxy \
-postfix_exporter
+postfix_exporter \
+klag_exporter
 
 .PHONY: $(MANUAL) $(AUTO_GENERATED)
 

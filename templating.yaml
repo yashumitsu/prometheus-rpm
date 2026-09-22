@@ -488,3 +488,40 @@ packages:
       dynamic:
         <<: *default_dynamic_context
         tarball: '{{URL}}/archive/refs/tags/%{version}.tar.gz'
+  klag_exporter:
+    build_steps:
+      <<: *default_build_steps
+    context:
+      <<: *default_context
+      static:
+        <<: *default_static_context
+        version: 0.1.27
+        license: MIT
+        URL: https://github.com/softwaremill/klag-exporter
+        summary: High-performance Kafka consumer group lag exporter for Prometheus and OTLP
+        description: |
+          klag-exporter is a high-performance Apache Kafka consumer group lag exporter
+          written in Rust. It calculates both offset lag and time lag (latency in seconds)
+          with accurate timestamp-based measurements, and exposes metrics natively via
+          Prometheus HTTP endpoint and OpenTelemetry OTLP.
+        package: 'klag-exporter-%{version}'
+        build_requires:
+          - rust
+          - cargo
+          - openssl-devel
+          - cyrus-sasl-devel
+          - clang-libs
+          - clang-devel
+          - cmake
+          - curl-devel
+        build_cmds:
+          - cargo build --release
+          - 'mv -v target/release/klag-exporter %{name}'
+        additional_sources:
+          - path: https://raw.githubusercontent.com/softwaremill/klag-exporter/refs/heads/main/config.example.toml
+            dest: '%{_sysconfdir}/prometheus/%{name}.toml'
+        service_opts:
+          - --config=/etc/prometheus/config.toml
+      dynamic:
+        <<: *default_dynamic_context
+        tarball: '{{URL}}/archive/refs/tags/v%{version}.tar.gz'
