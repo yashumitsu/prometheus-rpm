@@ -521,7 +521,7 @@ packages:
           - path: https://raw.githubusercontent.com/softwaremill/klag-exporter/refs/heads/main/config.example.toml
             dest: '%{_sysconfdir}/prometheus/%{name}.toml'
         service_opts:
-          - --config=/etc/prometheus/config.toml
+          - --config=/etc/prometheus/klag_exporter.toml
       dynamic:
         <<: *default_dynamic_context
         tarball: '{{URL}}/archive/refs/tags/v%{version}.tar.gz'
