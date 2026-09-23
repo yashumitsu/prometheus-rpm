@@ -208,7 +208,7 @@ packages:
     context:
       static:
         <<: *default_static_context
-        version: 1.90.0
+        version: 1.92.0
         license: MIT
         summary: Prometheus exporter for Redis server metrics.
         description: Prometheus Exporter for Redis Metrics. Supports Redis 2.x, 3.x, 4.x, 5.x and 6.x
@@ -504,7 +504,7 @@ packages:
           written in Rust. It calculates both offset lag and time lag (latency in seconds)
           with accurate timestamp-based measurements, and exposes metrics natively via
           Prometheus HTTP endpoint and OpenTelemetry OTLP.
-        package: 'klag-exporter-%{version}'
+        package: klag-exporter-%{version}
         build_requires:
           - rust
           - cargo
@@ -516,7 +516,7 @@ packages:
           - curl-devel
         build_cmds:
           - cargo build --release
-          - 'mv -v target/release/klag-exporter %{name}'
+          - mv -v target/release/klag-exporter %{name}
         additional_sources:
           - path: https://raw.githubusercontent.com/softwaremill/klag-exporter/refs/heads/main/config.example.toml
             dest: '%{_sysconfdir}/prometheus/%{name}.toml'
