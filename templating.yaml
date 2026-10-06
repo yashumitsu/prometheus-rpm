@@ -495,7 +495,7 @@ packages:
       <<: *default_context
       static:
         <<: *default_static_context
-        version: 0.1.27
+        version: 0.1.28
         license: MIT
         URL: https://github.com/softwaremill/klag-exporter
         summary: High-performance Kafka consumer group lag exporter for Prometheus and OTLP
@@ -542,7 +542,7 @@ packages:
           - --config.dir=/var/lib/ebpf_exporter
           - --config.names=biolatency
         additional_sources:
-          - path: 'examples/*'
+          - path: examples/*
             dest: '%{_sharedstatedir}/%{name}'
             from_tarball: true
         summary: Prometheus exporter for custom eBPF metrics
